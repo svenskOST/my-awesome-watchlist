@@ -1,14 +1,23 @@
 services:
-   db:
-      image: mongo
-      container_name: maw-db
+   client:
+      build:
+         context: ./client
+      container_name: maw-client
       ports:
-         - '27017:27017'
-      volumes:
-         - mongo-data:/data/db
+         - '3000:3000'
+      depends_on:
+         - server
+      develop:
+         watch:
+            - path: ./client/package.json
+              action: rebuild
+            - path: ./client
+              target: /app
+              action: sync
 
    server:
-      build: ./server
+      build:
+         context: ./server
       container_name: maw-server
       ports:
          - '5000:5000'
@@ -19,30 +28,19 @@ services:
          - db
       develop:
          watch:
-            - action: sync
-              path: ./server
-              target: .
-              ignore:
-                 - ./server/node_modules/
-            - action: rebuild
-              path: ./server/package.json
+            - path: ./server/package.json
+              action: rebuild
+            - path: ./server
+              target: /app
+              action: sync
 
-   client:
-      build: ./client
-      container_name: maw-client
+   db:
+      image: mongo
+      container_name: maw-db
       ports:
-         - '3000:3000'
-      depends_on:
-         - server
-      develop:
-         watch:
-            - action: sync
-              path: ./client
-              target: .
-              ignore:
-                 - ./client/node_modules/
-            - action: rebuild
-              path: ./client/package.json
+         - '27017:27017'
+      volumes:
+         - maw-data:/data/db
 
 volumes:
-   mongo-data:
+   maw-data:
