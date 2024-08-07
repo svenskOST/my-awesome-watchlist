@@ -8,22 +8,41 @@ services:
          - mongo-data:/data/db
 
    server:
-      build: server
+      build: ./server
       container_name: maw-server
       ports:
          - '5000:5000'
       environment:
-         MONGODB_URI: mongodb://localhost:27017/mawdb
+         PORT: 5000
+         MONGODB_URI: mongodb://maw-db:27017/mawdb
       depends_on:
          - db
+      develop:
+         watch:
+            - action: sync
+              path: ./server
+              target: .
+              ignore:
+                 - ./server/node_modules/
+            - action: rebuild
+              path: ./server/package.json
 
    client:
-      build: client
+      build: ./client
       container_name: maw-client
       ports:
          - '3000:3000'
       depends_on:
          - server
+      develop:
+         watch:
+            - action: sync
+              path: ./client
+              target: .
+              ignore:
+                 - ./client/node_modules/
+            - action: rebuild
+              path: ./client/package.json
 
 volumes:
    mongo-data:

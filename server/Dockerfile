@@ -1,8 +1,8 @@
-FROM node:20.16.0
+FROM node:20.16-slim
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
-COPY package*.json .
+COPY ./package*.json .
 
 RUN npm install
 

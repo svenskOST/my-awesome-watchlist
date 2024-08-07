@@ -44,7 +44,7 @@ router.put('/:id', authenticate, async (req, res) => {
       const item = await Item.findOneAndUpdate(
          { _id: id, userId: req.userId },
          { title, description, watched },
-         { new: true },
+         { new: true }
       )
       if (!item) return res.status(404).json({ error: 'Item not found' })
       res.json(item)

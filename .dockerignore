@@ -1,12 +1,5 @@
-# Dependencies
-node_modules
-
-# Next.js
-.next
-
-# Environment variables
+node_modules/
+.next/
 .env
-
-# Git
-.git
+.git/
 .gitignore

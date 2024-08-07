@@ -1,12 +1,12 @@
 {
-    "name": "maw-server",
-    "version": "1.0.0",
-    "description": "My Awesome Watchlist backend package.",
-    "author": "Alexander Marini",
-    "license": "MIT",
-    "private": true,
-    "type": "module",
-    "scripts": {
+   "name": "maw-server",
+   "version": "1.0.0",
+   "description": "My Awesome Watchlist backend package.",
+   "author": "Alexander Marini",
+   "license": "MIT",
+   "private": true,
+   "type": "module",
+   "scripts": {
       "dev": "node server.js"
    },
    "dependencies": {
@@ -17,5 +17,4 @@
       "jsonwebtoken": "^9.0.2",
       "mongoose": "^8.5.2"
    }
-  }
-  
+}
