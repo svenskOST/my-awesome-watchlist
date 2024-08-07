@@ -6,12 +6,9 @@
    "license": "MIT",
    "private": true,
    "type": "module",
-   "workspaces": [
-      "client",
-      "server"
-   ],
    "devDependencies": {
       "eslint": "8.57.0",
-      "prettier": "3.3.3"
+      "prettier": "3.3.3",
+      "prettier-plugin-tailwindcss": "0.6.5"
    }
 }

@@ -1,12 +1,12 @@
 {
-    "name": "maw-client",
-    "version": "1.0.0",
-    "description": "My Awesome Watchlist frontend package.",
-    "author": "Alexander Marini",
-    "license": "MIT",
-    "private": true,
-    "type": "module",
-    "scripts": {
+   "name": "maw-client",
+   "version": "1.0.0",
+   "description": "My Awesome Watchlist frontend package.",
+   "author": "Alexander Marini",
+   "license": "MIT",
+   "private": true,
+   "type": "module",
+   "scripts": {
       "dev": "next dev",
       "build": "next build",
       "start": "next start",
@@ -19,10 +19,9 @@
       "react": "^18",
       "react-dom": "^18"
    },
-    "devDependencies": {
-        "postcss": "^8",
-        "tailwindcss": "^3.4.1",
-        "eslint-config-next": "14.2.5",
-        "prettier-plugin-tailwindcss": "0.6.5"
-     }
+   "devDependencies": {
+      "eslint-config-next": "14.2.5",
+      "postcss": "^8",
+      "tailwindcss": "^3.4.1"
+   }
 }
