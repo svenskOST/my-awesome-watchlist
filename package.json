@@ -1,0 +1,17 @@
+{
+   "name": "maw-dev",
+   "version": "1.0.0",
+   "description": "My Awesome Watchlist shared development package.",
+   "author": "Alexander Marini",
+   "license": "MIT",
+   "private": true,
+   "type": "module",
+   "workspaces": [
+      "client",
+      "server"
+   ],
+   "devDependencies": {
+      "eslint": "8.57.0",
+      "prettier": "3.3.3"
+   }
+}
