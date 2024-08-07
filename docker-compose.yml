@@ -8,7 +8,7 @@ services:
          - mongo-data:/data/db
 
    server:
-      build: ./server
+      build: server
       container_name: maw-server
       ports:
          - '5000:5000'
@@ -18,7 +18,7 @@ services:
          - db
 
    client:
-      build: ./client
+      build: client
       container_name: maw-client
       ports:
          - '3000:3000'
