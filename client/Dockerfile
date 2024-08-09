@@ -6,8 +6,6 @@ COPY ./package*.json .
 
 RUN npm install
 
-RUN npx next telemetry disable
-
 COPY . .
 
 EXPOSE 3000
