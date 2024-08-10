@@ -5,8 +5,6 @@ services:
       container_name: maw-client
       ports:
          - '3000:3000'
-      depends_on:
-         - server
       develop:
          watch:
             - path: ./client/package.json
@@ -24,15 +22,14 @@ services:
       environment:
          PORT: 5000
          MONGODB_URI: mongodb://maw-db:27017/mawdb
+         JWT_ACCESS_SECRET: Ad9AeTd+sXLmCyxZKW1a6etcHXzRNpIqDOrv/C73KHwsh4AN+5bT
+         JWT_REFRESH_SECRET: RN/SyhIA3oIwPVmuiH0AZECddaKYCTlrYoAeiyVZ5sIwoFKp1L6l
       depends_on:
          - db
       develop:
          watch:
-            - path: ./server/package.json
-              action: rebuild
             - path: ./server
-              target: /app
-              action: sync
+              action: rebuild
 
    db:
       image: mongo

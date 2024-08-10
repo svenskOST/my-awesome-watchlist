@@ -12,8 +12,8 @@ const PORT = process.env.PORT
 
 app.use(cors())
 app.use(express.json())
-app.use('/api/auth', authRoutes)
-app.use('/api/watchlist', watchlistRoutes)
+app.use('/auth', authRoutes)
+app.use('/watchlist', watchlistRoutes)
 
 mongoose
    .connect(process.env.MONGODB_URI)

@@ -1,17 +1,8 @@
 import express from 'express'
-import Item from '../models/Item.js'
-const router = express.Router()
+import authenticate from './auth.js'
+import Item from '../schemas/Item.js'
 
-const authenticate = (req, res, next) => {
-   const token = req.header('Authorization').replace('Bearer ', '')
-   try {
-      const decoded = jwt.verify(token, process.env.JWT_SECRET)
-      req.userId = decoded.userId
-      next()
-   } catch (error) {
-      res.status(401).json({ error: 'Please authenticate' })
-   }
-}
+const router = express.Router()
 
 router.post('/', authenticate, async (req, res) => {
    try {
