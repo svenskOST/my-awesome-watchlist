@@ -23,7 +23,7 @@ export function fieldValidation(field, msg, formData, setErrMsgs) {
 export function feedback(field, res, setErrMsgs) {
    setErrMsgs(prevErrMsgs => ({
       ...prevErrMsgs,
-      [field]: res.err,
+      [field]: typeof res === 'string' ? res : res.err,
    }))
 }
 

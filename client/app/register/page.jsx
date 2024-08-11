@@ -1,10 +1,10 @@
 'use client'
 
-import useState from 'react'
-import Link from 'next/link'
+import { useState } from 'react'
+import { Link } from 'next/link'
+import { fieldValidation, feedback, clear } from '../helpers/formFunctions.js'
 import TextControl from '../components/TextControl'
 import Submit from '../components/Submit'
-import { fieldValidation, feedback, clear } from '../helpers/formFunctions.js'
 
 export default function Register() {
    const empty = {
@@ -75,7 +75,8 @@ export default function Register() {
                   break
             }
       } catch (err) {
-         console.error('Error:', err)
+         console.error(err)
+         allFieldsErr('Error')
       }
    }
 

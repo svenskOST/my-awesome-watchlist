@@ -1,10 +1,10 @@
 'use client'
 
-import useState from 'react'
-import useRouter from 'next/navigation'
+import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { fieldValidation, feedback, clear } from '../helpers/formFunctions.js'
 import TextControl from '../components/TextControl'
 import Submit from '../components/Submit'
-import { fieldValidation, feedback, clear } from '../helpers/formFunctions.js'
 
 export default function Login() {
    const empty = {
@@ -65,7 +65,9 @@ export default function Login() {
                   break
             }
       } catch (err) {
-         console.error('Error:', err)
+         console.error(err)
+         feedback('username', 'Error', setErrMsgs)
+         feedback('password', 'Error', setErrMsgs)
       }
    }
 

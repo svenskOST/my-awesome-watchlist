@@ -12,7 +12,7 @@ export const authenticate = (req, res, next) => {
    }
 
    jwt.verify(accessToken, JWT_ACCESS_SECRET, (err, userId) => {
-      if (err) return res.status(401).json({ error: 'Token is not valid' })
+      if (err) return res.status(401).json({ err: 'Token is not valid' })
       req.userId = userId
       next()
    })
@@ -23,9 +23,9 @@ router.post('/register', async (req, res) => {
       const { username, password } = req.body
       const user = new User({ username, password })
       await user.save()
-      res.status(201).json({ message: 'User created' })
-   } catch (error) {
-      res.status(400).json({ error: error.message })
+      res.status(201).json({ msg: 'User created' })
+   } catch (err) {
+      res.status(400).json({ err: err.message })
    }
 })
 
@@ -58,8 +58,8 @@ router.post('/login', async (req, res) => {
       await user.save()
 
       res.json({ accessToken, refreshToken })
-   } catch (error) {
-      res.status(400).json({ error: error.message })
+   } catch (err) {
+      res.status(400).json({ err: err.message })
    }
 })
 
@@ -76,8 +76,8 @@ router.post('/logout', async (req, res) => {
       await user.save()
 
       res.status(200).json({ message: 'Logged out successfully' })
-   } catch (error) {
-      res.status(400).json({ error: error.message })
+   } catch (err) {
+      res.status(400).json({ err: err.message })
    }
 })
 
