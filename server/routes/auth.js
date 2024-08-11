@@ -5,19 +5,17 @@ import User from '../schemas/User.js'
 const router = express.Router()
 
 export const authenticate = (req, res, next) => {
-   const token = req.header('Authorization').replace('Bearer ', '')
+   const accessToken = req.header('Authorization').replace('Bearer ', '')
 
-   if (!token) {
+   if (!accessToken) {
       return res.status(403).json({ error: 'No token provided' })
    }
 
-   try {
-      const decoded = jwt.verify(token, process.env.JWT_SECRET)
-      req.userId = decoded.userId
+   jwt.verify(accessToken, JWT_ACCESS_SECRET, (err, userId) => {
+      if (err) return res.status(401).json({ error: 'Token is not valid' })
+      req.userId = userId
       next()
-   } catch (error) {
-      res.status(401).json({ error: 'Token is not valid' })
-   }
+   })
 }
 
 router.post('/register', async (req, res) => {
@@ -37,7 +35,7 @@ router.post('/login', async (req, res) => {
 
       const user = await User.findOne({ username })
       if (!user) {
-         return res.status(404).json({ error: 'That user does not exist' })
+         return res.status(404).json({ error: 'Could not find user' })
       }
 
       const valid = await user.comparePassword(password)
@@ -47,12 +45,12 @@ router.post('/login', async (req, res) => {
 
       const accessToken = jwt.sign(
          { userId: user._id },
-         process.env.JWT_SECRET,
+         process.env.JWT_ACCESS_SECRET,
          { expiresIn: '24h' }
       )
       const refreshToken = jwt.sign(
          { userId: user._id },
-         process.env.JWT_SECRET,
+         process.env.JWT_REFRESH_SECRET,
          { expiresIn: '7d' }
       )
 

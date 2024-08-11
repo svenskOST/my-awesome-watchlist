@@ -6,27 +6,27 @@ export function handleChange(e, formData, setFormData) {
    })
 }
 
-export function fieldValidation(field, message, formData, setErrorMessages) {
+export function fieldValidation(field, msg, formData, setErrMsgs) {
    if (!formData[field]) {
-      setErrorMessages(prevErrorMessages => ({
-         ...prevErrorMessages,
-         [field]: message,
+      setErrMsgs(prevErrMsgs => ({
+         ...prevErrMsgs,
+         [field]: msg,
       }))
    } else {
-      setErrorMessages(prevErrorMessages => ({
-         ...prevErrorMessages,
+      setErrMsgs(prevErrMsgs => ({
+         ...prevErrMsgs,
          [field]: '',
       }))
    }
 }
 
-export function feedback(field, data, setErrorMessages) {
-   setErrorMessages(prevErrorMessages => ({
-      ...prevErrorMessages,
-      [field]: data.error,
+export function feedback(field, res, setErrMsgs) {
+   setErrMsgs(prevErrMsgs => ({
+      ...prevErrMsgs,
+      [field]: res.err,
    }))
 }
 
-export function clear(setErrorMessages, empty) {
-   setErrorMessages(empty)
+export function clear(setErrMsgs, empty) {
+   setErrMsgs(empty)
 }

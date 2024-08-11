@@ -1,15 +1,10 @@
 'use client'
 
-import { useState } from 'react'
+import useState from 'react'
 import Link from 'next/link'
 import TextControl from '../components/TextControl'
 import Submit from '../components/Submit'
-import {
-   handleChange,
-   fieldValidation,
-   feedback,
-   clear,
-} from '../helpers/formFunctions.js'
+import { fieldValidation, feedback, clear } from '../helpers/formFunctions.js'
 
 export default function Register() {
    const empty = {
@@ -19,17 +14,17 @@ export default function Register() {
    }
 
    const [formData, setFormData] = useState(empty)
-   const [errorMessages, setErrorMessages] = useState(empty)
-   const [registrationComplete, setRegistrationComplete] = useState(false)
+   const [errMsgs, setErrMsgs] = useState(empty)
+   const [complete, setComplete] = useState(false)
 
-   const allFieldsError = data => {
-      feedback('username', data, setErrorMessages)
-      feedback('email', data, setErrorMessages)
-      feedback('password', data, setErrorMessages)
+   const allFieldsErr = res => {
+      feedback('username', res, setErrMsgs)
+      feedback('email', res, setErrMsgs)
+      feedback('password', res, setErrMsgs)
    }
 
    const handleSubmit = async e => {
-      clear(setErrorMessages, empty)
+      clear(setErrMsgs, empty)
       e.preventDefault()
 
       if (!formData.username || !formData.email || !formData.password) {
@@ -37,53 +32,50 @@ export default function Register() {
             'username',
             'Please choose a username',
             formData,
-            setErrorMessages
+            setErrMsgs
          )
          fieldValidation(
             'email',
             'Please enter your email',
             formData,
-            setErrorMessages
+            setErrMsgs
          )
          fieldValidation(
             'password',
             'Please choose a password',
             formData,
-            setErrorMessages
+            setErrMsgs
          )
 
          return
       }
 
       try {
-         const response = await fetch(
-            'http://localhost:5000/api/auth/register',
-            {
-               method: 'POST',
-               headers: { 'Content-Type': 'application/json' },
-               body: JSON.stringify(formData),
-            }
-         )
+         const req = await fetch('http://localhost:5000/auth/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData),
+         })
 
-         const data = await response.json()
+         const res = await req.json()
 
-         if (response.ok) {
+         if (res.ok) {
             setFormData(empty)
-            setRegistrationComplete(true)
+            setComplete(true)
          } else
-            switch (response.status) {
+            switch (res.status) {
                case 409:
-                  feedback('username', data, setErrorMessages)
+                  feedback('username', res, setErrMsgs)
                   break
                case 500:
-                  allFieldsError(data)
+                  allFieldsErr(res)
                   break
                case 400:
-                  allFieldsError(data)
+                  allFieldsErr(res)
                   break
             }
-      } catch (error) {
-         console.error('Error:', error)
+      } catch (err) {
+         console.error('Error:', err)
       }
    }
 
@@ -119,7 +111,7 @@ export default function Register() {
                   setFormData={setFormData}
                />
                <TextControl
-                  id='password'
+                  id='new-password'
                   errorMessage={errorMessages.password}
                   type='password'
                   placeholder='Password'
