@@ -21,6 +21,12 @@ export const authenticate = (req, res, next) => {
 router.post('/register', async (req, res) => {
    try {
       const { username, password } = req.body
+
+      const exists = await User.findOne({ username })
+      if (exists) {
+         return res.status(409).json({ err: 'Username is already taken ' })
+      }
+      
       const user = new User({ username, password })
       await user.save()
       res.status(201).json({ msg: 'User created' })
@@ -35,12 +41,12 @@ router.post('/login', async (req, res) => {
 
       const user = await User.findOne({ username })
       if (!user) {
-         return res.status(404).json({ error: 'Could not find user' })
+         return res.status(404).json({ err: 'Could not find user' })
       }
 
       const valid = await user.comparePassword(password)
       if (!valid) {
-         return res.status(401).json({ error: 'Invalid credentials' })
+         return res.status(401).json({ err: 'Invalid credentials' })
       }
 
       const accessToken = jwt.sign(

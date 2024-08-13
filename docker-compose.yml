@@ -7,11 +7,8 @@ services:
          - '3000:3000'
       develop:
          watch:
-            - path: ./client/package.json
-              action: rebuild
             - path: ./client
-              target: /app
-              action: sync
+              action: rebuild
 
    server:
       build:

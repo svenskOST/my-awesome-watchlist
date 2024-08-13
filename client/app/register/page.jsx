@@ -59,11 +59,11 @@ export default function Register() {
 
          const res = await req.json()
 
-         if (res.ok) {
+         if (req.ok) {
             setFormData(empty)
             setComplete(true)
          } else
-            switch (res.status) {
+            switch (req.status) {
                case 409:
                   feedback('username', res, setErrMsgs)
                   break
@@ -82,7 +82,7 @@ export default function Register() {
 
    return (
       <main>
-         {registrationComplete ? (
+         {complete ? (
             <div>
                <h2>Registration complete!</h2>
                <Link href={'/login'}>Login</Link>
@@ -91,34 +91,25 @@ export default function Register() {
             <form onSubmit={handleSubmit}>
                <TextControl
                   id='username'
-                  errorMessage={errorMessages.username}
                   type='text'
-                  placeholder='Username'
+                  errMsg={errMsgs.username}
                   value={formData.username}
-                  auto='username'
-                  handleChange={handleChange}
                   formData={formData}
                   setFormData={setFormData}
                />
                <TextControl
                   id='email'
-                  errorMessage={errorMessages.email}
                   type='email'
-                  placeholder='Email'
+                  errMsg={errMsgs.email}
                   value={formData.email}
-                  auto='email'
-                  handleChange={handleChange}
                   formData={formData}
                   setFormData={setFormData}
                />
                <TextControl
-                  id='new-password'
-                  errorMessage={errorMessages.password}
-                  type='password'
-                  placeholder='Password'
+                  id='password'
+                  type='new-password'
+                  errMsg={errMsgs.password}
                   value={formData.password}
-                  auto='new-password'
-                  handleChange={handleChange}
                   formData={formData}
                   setFormData={setFormData}
                />

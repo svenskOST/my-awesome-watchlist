@@ -1,36 +1,26 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import Link from 'next/link'
 import { Inter } from 'next/font/google'
 import './globals.css'
+import { AuthProvider } from './components/AuthProvider'
+import Navbar from './components/Navbar'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function RootLayout({ children }) {
-   const [isLoggedIn, setIsLoggedIn] = useState(false)
-
    return (
       <>
          <head>
             <title>My Awesome Watchlist</title>
          </head>
-         <html lang='en'>
-            <body className={inter.className}>
-               <nav>
-                  Navbar
-                  {isLoggedIn ? (
-                     'svenskOST'
-                  ) : (
-                     <>
-                        <Link href={'/login'}>Login</Link>
-                        <Link href={'/register'}>Register</Link>
-                     </>
-                  )}
-               </nav>
-               {children}
-            </body>
-         </html>
+         <AuthProvider>
+            <html lang='en'>
+               <body className={inter.className}>
+                  <Navbar />
+                  {children}
+               </body>
+            </html>
+         </AuthProvider>
       </>
    )
 }

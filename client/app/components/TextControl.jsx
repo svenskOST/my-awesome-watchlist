@@ -2,6 +2,7 @@ import { handleChange } from '../helpers/formFunctions'
 
 export default function TextControl({
    id,
+   type,
    errMsg,
    value,
    formData,
@@ -12,11 +13,6 @@ export default function TextControl({
       return str.charAt(0).toUpperCase() + str.slice(1)
    }
 
-   const type = id => {
-      if (id == 'username') return 'text'
-      return id
-   }
-
    return (
       <div>
          <label htmlFor={id}>{errMsg}</label>
@@ -25,7 +21,7 @@ export default function TextControl({
             name={id}
             value={value}
             autoComplete={id}
-            type={type(id)}
+            type={type}
             placeholder={capitalize(id)}
             onChange={e => handleChange(e, formData, setFormData)}
          />

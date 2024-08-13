@@ -46,13 +46,13 @@ export default function Login() {
 
          const res = await req.json()
 
-         if (res.ok) {
+         if (req.ok) {
             localStorage.setItem('accessToken', res.accessToken)
             localStorage.setItem('refreshToken', res.refreshToken)
             setFormData(empty)
             router.push('/')
          } else
-            switch (res.status) {
+            switch (req.status) {
                case 404:
                   feedback('username', res, setErrMsgs)
                   break
@@ -78,6 +78,7 @@ export default function Login() {
             <form onSubmit={handleSubmit}>
                <TextControl
                   id='username'
+                  type='text'
                   errMsg={errMsgs.username}
                   value={formData.username}
                   formData={formData}
@@ -85,6 +86,7 @@ export default function Login() {
                />
                <TextControl
                   id='password'
+                  type='password'
                   errMsg={errMsgs.password}
                   value={formData.password}
                   formData={formData}

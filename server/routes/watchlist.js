@@ -15,7 +15,7 @@ router.post('/', authenticate, async (req, res) => {
       await item.save()
       res.status(201).json(item)
    } catch (error) {
-      res.status(400).json({ error: error.message })
+      res.status(400).json({ err: error.message })
    }
 })
 
@@ -23,8 +23,8 @@ router.get('/', authenticate, async (req, res) => {
    try {
       const item = await Item.find({ userId: req.userId })
       res.json(item)
-   } catch (error) {
-      res.status(400).json({ error: error.message })
+   } catch (err) {
+      res.status(400).json({ err: err.message })
    }
 })
 
@@ -37,10 +37,10 @@ router.put('/:id', authenticate, async (req, res) => {
          { title, description, watched },
          { new: true }
       )
-      if (!item) return res.status(404).json({ error: 'Item not found' })
+      if (!item) return res.status(404).json({ err: 'Item not found' })
       res.json(item)
-   } catch (error) {
-      res.status(400).json({ error: error.message })
+   } catch (err) {
+      res.status(400).json({ err: err.message })
    }
 })
 
@@ -51,10 +51,10 @@ router.delete('/:id', authenticate, async (req, res) => {
          _id: id,
          userId: req.userId,
       })
-      if (!item) return res.status(404).json({ error: 'Item not found' })
+      if (!item) return res.status(404).json({ err: 'Item not found' })
       res.json({ message: 'Item deleted' })
-   } catch (error) {
-      res.status(400).json({ error: error.message })
+   } catch (err) {
+      res.status(400).json({ err: err.message })
    }
 })
 
