@@ -13,11 +13,11 @@ export default function Login() {
    }
 
    const [formData, setFormData] = useState(empty)
-   const [errMsgs, setErrMsgs] = useState(empty)
+   const [errorMessages, setErrorMessages] = useState(empty)
    const router = useRouter()
 
    const handleSubmit = async e => {
-      clear(setErrMsgs, empty)
+      clear(setErrorMessages, empty)
       e.preventDefault()
 
       if (!formData.username || !formData.password) {
@@ -25,49 +25,49 @@ export default function Login() {
             'username',
             'Please enter your username',
             formData,
-            setErrMsgs
+            setErrorMessages
          )
          fieldValidation(
             'password',
             'Please enter your password',
             formData,
-            setErrMsgs
+            setErrorMessages
          )
 
          return
       }
 
       try {
-         const req = await fetch('http://localhost:5000/auth/login', {
+         const request = await fetch('http://localhost:5000/auth/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(formData),
          })
 
-         const res = await req.json()
+         const response = await request.json()
 
-         if (req.ok) {
-            localStorage.setItem('accessToken', res.accessToken)
-            localStorage.setItem('refreshToken', res.refreshToken)
+         if (request.ok) {
+            localStorage.setItem('accessToken', response.accessToken)
+            localStorage.setItem('refreshToken', response.refreshToken)
             setFormData(empty)
             router.push('/')
          } else
-            switch (req.status) {
+            switch (request.status) {
                case 404:
-                  feedback('username', res, setErrMsgs)
+                  feedback('username', response, setErrorMessages)
                   break
                case 401:
-                  feedback('password', res, setErrMsgs)
+                  feedback('password', response, setErrorMessages)
                   break
                case 400:
-                  feedback('username', res, setErrMsgs)
-                  feedback('password', res, setErrMsgs)
+                  feedback('username', response, setErrorMessages)
+                  feedback('password', response, setErrorMessages)
                   break
             }
-      } catch (err) {
-         console.error(err)
-         feedback('username', 'Error', setErrMsgs)
-         feedback('password', 'Error', setErrMsgs)
+      } catch (error) {
+         console.error(error)
+         feedback('username', 'Error', setErrorMessages)
+         feedback('password', 'Error', setErrorMessages)
       }
    }
 
@@ -79,7 +79,7 @@ export default function Login() {
                <TextControl
                   id='username'
                   type='text'
-                  errMsg={errMsgs.username}
+                  errMsg={errorMessages.username}
                   value={formData.username}
                   formData={formData}
                   setFormData={setFormData}
@@ -87,7 +87,7 @@ export default function Login() {
                <TextControl
                   id='password'
                   type='password'
-                  errMsg={errMsgs.password}
+                  errMsg={errorMessages.password}
                   value={formData.password}
                   formData={formData}
                   setFormData={setFormData}

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Link } from 'next/link'
+import Link from 'next/link'
 import { fieldValidation, feedback, clear } from '../helpers/formFunctions.js'
 import TextControl from '../components/TextControl'
 import Submit from '../components/Submit'
@@ -14,17 +14,17 @@ export default function Register() {
    }
 
    const [formData, setFormData] = useState(empty)
-   const [errMsgs, setErrMsgs] = useState(empty)
+   const [errorMessages, setErrorMessages] = useState(empty)
    const [complete, setComplete] = useState(false)
 
-   const allFieldsErr = res => {
-      feedback('username', res, setErrMsgs)
-      feedback('email', res, setErrMsgs)
-      feedback('password', res, setErrMsgs)
+   const allFieldsError = response => {
+      feedback('username', response, setErrorMessages)
+      feedback('email', response, setErrorMessages)
+      feedback('password', response, setErrorMessages)
    }
 
    const handleSubmit = async e => {
-      clear(setErrMsgs, empty)
+      clear(setErrorMessages, empty)
       e.preventDefault()
 
       if (!formData.username || !formData.email || !formData.password) {
@@ -32,51 +32,51 @@ export default function Register() {
             'username',
             'Please choose a username',
             formData,
-            setErrMsgs
+            setErrorMessages
          )
          fieldValidation(
             'email',
             'Please enter your email',
             formData,
-            setErrMsgs
+            setErrorMessages
          )
          fieldValidation(
             'password',
             'Please choose a password',
             formData,
-            setErrMsgs
+            setErrorMessages
          )
 
          return
       }
 
       try {
-         const req = await fetch('http://localhost:5000/auth/register', {
+         const request = await fetch('http://localhost:5000/auth/register', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(formData),
          })
 
-         const res = await req.json()
+         const response = await request.json()
 
-         if (req.ok) {
+         if (request.ok) {
             setFormData(empty)
             setComplete(true)
          } else
-            switch (req.status) {
+            switch (request.status) {
                case 409:
-                  feedback('username', res, setErrMsgs)
+                  feedback('username', response, setErrorMessages)
                   break
                case 500:
-                  allFieldsErr(res)
+                  allFieldsErr(response)
                   break
                case 400:
-                  allFieldsErr(res)
+                  allFieldsErr(response)
                   break
             }
-      } catch (err) {
-         console.error(err)
-         allFieldsErr('Error')
+      } catch (error) {
+         console.error(error)
+         allFieldsError('Error')
       }
    }
 
@@ -92,7 +92,7 @@ export default function Register() {
                <TextControl
                   id='username'
                   type='text'
-                  errMsg={errMsgs.username}
+                  errMsg={errorMessages.username}
                   value={formData.username}
                   formData={formData}
                   setFormData={setFormData}
@@ -100,7 +100,7 @@ export default function Register() {
                <TextControl
                   id='email'
                   type='email'
-                  errMsg={errMsgs.email}
+                  errMsg={errorMessages.email}
                   value={formData.email}
                   formData={formData}
                   setFormData={setFormData}
@@ -108,7 +108,7 @@ export default function Register() {
                <TextControl
                   id='password'
                   type='new-password'
-                  errMsg={errMsgs.password}
+                  errMsg={errorMessages.password}
                   value={formData.password}
                   formData={formData}
                   setFormData={setFormData}

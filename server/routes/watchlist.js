@@ -1,61 +1,62 @@
 import express from 'express'
 import authenticate from './auth.js'
-import Item from '../schemas/Item.js'
 
 const router = express.Router()
 
-router.post('/', authenticate, async (req, res) => {
+/*
+router.post('/', authenticate, async (request, response) => {
    try {
-      const { title, description } = req.body
+      const { title, description } = request.body
       const item = new Item({
-         userId: req.userId,
+         userId: request.userId,
          title,
          description,
       })
       await item.save()
-      res.status(201).json(item)
+      response.status(201).json(item)
    } catch (error) {
-      res.status(400).json({ err: error.message })
+      response.status(400).json({ error: error.message })
    }
 })
 
-router.get('/', authenticate, async (req, res) => {
+router.get('/', authenticate, async (request, response) => {
    try {
-      const item = await Item.find({ userId: req.userId })
-      res.json(item)
-   } catch (err) {
-      res.status(400).json({ err: err.message })
+      const item = await Item.find({ userId: request.userId })
+      response.json(item)
+   } catch (error) {
+      response.status(400).json({ error: error.message })
    }
 })
 
-router.put('/:id', authenticate, async (req, res) => {
+router.put('/:id', authenticate, async (request, response) => {
    try {
-      const { id } = req.params
-      const { title, description, watched } = req.body
+      const { id } = request.params
+      const { title, description, watched } = request.body
       const item = await Item.findOneAndUpdate(
-         { _id: id, userId: req.userId },
+         { _id: id, userId: request.userId },
          { title, description, watched },
          { new: true }
       )
-      if (!item) return res.status(404).json({ err: 'Item not found' })
-      res.json(item)
-   } catch (err) {
-      res.status(400).json({ err: err.message })
+      if (!item) return response.status(404).json({ error: 'Item not found' })
+      response.json(item)
+   } catch (error) {
+      response.status(400).json({ error: error.message })
    }
 })
 
-router.delete('/:id', authenticate, async (req, res) => {
+router.delete('/:id', authenticate, async (request, response) => {
    try {
-      const { id } = req.params
+      const { id } = request.params
       const item = await Item.findOneAndDelete({
          _id: id,
-         userId: req.userId,
+         userId: request.userId,
       })
-      if (!item) return res.status(404).json({ err: 'Item not found' })
-      res.json({ message: 'Item deleted' })
-   } catch (err) {
-      res.status(400).json({ err: err.message })
+      if (!item) return response.status(404).json({ error: 'Item not found' })
+      response.json({ message: 'Item deleted' })
+   } catch (error) {
+      response.status(400).json({ error: error.message })
    }
 })
+*/
 
 export default router

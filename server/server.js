@@ -5,6 +5,9 @@ import dotenv from 'dotenv'
 import authRoutes from './routes/auth.js'
 import watchlistRoutes from './routes/watchlist.js'
 
+console.log('maw-server starting')
+console.log(`maw-server running in node ${process.version}`)
+
 dotenv.config()
 
 const app = express()
@@ -18,12 +21,8 @@ app.use('/watchlist', watchlistRoutes)
 mongoose
    .connect(process.env.MONGODB_URI)
    .then(() => {
-      console.log('Connected to MongoDB')
+      console.log('Connected to maw-cluster')
    })
-   .catch(err => {
-      console.error('Error connecting to MongoDB', err)
+   .catch(error => {
+      console.error('Error connecting to maw-cluster', error)
    })
-
-app.listen(PORT, () => {
-   console.log(`Server running on port ${PORT}`)
-})

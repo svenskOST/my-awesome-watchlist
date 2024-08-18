@@ -7,7 +7,6 @@ export function AuthProvider({ children }) {
 
    useEffect(() => {
       const accessToken = localStorage.getItem('accessToken')
-      console.log(accessToken)
       setIsLoggedIn(!!accessToken)
    }, [])
 
@@ -19,5 +18,5 @@ export function AuthProvider({ children }) {
 }
 
 export function useAuth() {
-   return useContext(AuthContext)   
+   return useContext(AuthContext)
 }
