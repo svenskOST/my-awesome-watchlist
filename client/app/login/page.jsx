@@ -2,9 +2,9 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { fieldValidation, feedback, clear } from '../helpers/formFunctions.js'
-import TextControl from '../components/TextControl'
-import Submit from '../components/Submit'
+import { fieldValidation, feedback, clear } from '../../helpers/formFunctions.js'
+import TextControl from '../../components/TextControl'
+import Submit from '../../components/Submit'
 
 export default function Login() {
    const empty = {
