@@ -50,6 +50,7 @@ export default function Login() {
             localStorage.setItem('accessToken', response.accessToken)
             localStorage.setItem('refreshToken', response.refreshToken)
             setFormData(empty)
+            router.refresh()
             router.push('/')
          } else
             switch (request.status) {

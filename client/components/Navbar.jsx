@@ -13,7 +13,11 @@ export default function Navbar() {
       <nav>
          Navbar
          {isLoggedIn ? (
-            'Rendera element som användarnamn, profilbild, dropdownmeny med länkar'
+            <>
+               Rendera element som användarnamn, profilbild, dropdownmeny med
+               länkar
+               <button onClick={handleLogout}>Logout</button>
+            </>
          ) : (
             <>
                <Link href={'/login'}>Login</Link>
