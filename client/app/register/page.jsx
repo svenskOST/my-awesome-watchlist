@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { fieldValidation, feedback, clear } from '../../helpers/formFunctions.js'
+import { fieldValidation, feedback, clear } from '../../helpers/formFunctions'
 import TextControl from '../../components/TextControl'
 import Submit from '../../components/Submit'
 
@@ -92,7 +92,7 @@ export default function Register() {
                <TextControl
                   id='username'
                   type='text'
-                  errMsg={errorMessages.username}
+                  errorMessage={errorMessages.username}
                   value={formData.username}
                   formData={formData}
                   setFormData={setFormData}
@@ -100,7 +100,7 @@ export default function Register() {
                <TextControl
                   id='email'
                   type='email'
-                  errMsg={errorMessages.email}
+                  errorMessage={errorMessages.email}
                   value={formData.email}
                   formData={formData}
                   setFormData={setFormData}
@@ -108,7 +108,7 @@ export default function Register() {
                <TextControl
                   id='password'
                   type='new-password'
-                  errMsg={errorMessages.password}
+                  errorMessage={errorMessages.password}
                   value={formData.password}
                   formData={formData}
                   setFormData={setFormData}

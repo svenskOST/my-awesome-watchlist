@@ -79,7 +79,7 @@ export default function Login() {
                <TextControl
                   id='username'
                   type='text'
-                  errMsg={errorMessages.username}
+                  errorMessage={errorMessages.username}
                   value={formData.username}
                   formData={formData}
                   setFormData={setFormData}
@@ -87,7 +87,7 @@ export default function Login() {
                <TextControl
                   id='password'
                   type='password'
-                  errMsg={errorMessages.password}
+                  errorMessage={errorMessages.password}
                   value={formData.password}
                   formData={formData}
                   setFormData={setFormData}
