@@ -51,7 +51,7 @@ export default function Register() {
       }
 
       try {
-         const request = await fetch('http://localhost:5000/auth/register', {
+         const request = await fetch('http://localhost:4000/auth/register', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(formData),

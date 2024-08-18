@@ -26,3 +26,7 @@ mongoose
    .catch(error => {
       console.error('Error connecting to maw-cluster', error)
    })
+
+app.listen(PORT, () => {
+   console.log(`Server is running on http://localhost:${PORT}`)
+})
