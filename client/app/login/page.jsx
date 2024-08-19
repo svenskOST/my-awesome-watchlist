@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { useAuth } from '../../context/AuthProvider.jsx'
 import { fieldValidation, feedback, clear } from '../../helpers/formFunctions.js'
 import TextControl from '../../components/TextControl'
 import Submit from '../../components/Submit'
@@ -11,28 +12,18 @@ export default function Login() {
       username: '',
       password: '',
    }
-
    const [formData, setFormData] = useState(empty)
    const [errorMessages, setErrorMessages] = useState(empty)
    const router = useRouter()
+   const { authenticate } = useAuth()
 
    const handleSubmit = async e => {
       clear(setErrorMessages, empty)
       e.preventDefault()
 
       if (!formData.username || !formData.password) {
-         fieldValidation(
-            'username',
-            'Please enter your username',
-            formData,
-            setErrorMessages
-         )
-         fieldValidation(
-            'password',
-            'Please enter your password',
-            formData,
-            setErrorMessages
-         )
+         fieldValidation('username', 'Please enter your username', formData, setErrorMessages)
+         fieldValidation('password', 'Please enter your password', formData, setErrorMessages)
 
          return
       }
@@ -49,8 +40,7 @@ export default function Login() {
          if (request.ok) {
             localStorage.setItem('accessToken', response.accessToken)
             localStorage.setItem('refreshToken', response.refreshToken)
-            setFormData(empty)
-            router.refresh()
+            authenticate()
             router.push('/')
          } else
             switch (request.status) {

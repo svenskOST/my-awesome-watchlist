@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { useAuth } from './AuthProvider'
+import { useAuth } from '../context/AuthProvider'
 
 export default function Navbar() {
    const { isLoggedIn, setIsLoggedIn } = useAuth()
@@ -9,13 +9,13 @@ export default function Navbar() {
       localStorage.removeItem('refreshToken')
       setIsLoggedIn(false)
    }
+
    return (
       <nav>
          Navbar
          {isLoggedIn ? (
             <>
-               Rendera element som användarnamn, profilbild, dropdownmeny med
-               länkar
+               Rendera element som användarnamn, profilbild, dropdownmeny med länkar
                <button onClick={handleLogout}>Logout</button>
             </>
          ) : (

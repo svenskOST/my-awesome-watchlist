@@ -1,13 +1,6 @@
 import { handleChange } from '../helpers/formFunctions'
 
-export default function TextControl({
-   id,
-   type,
-   errorMessage,
-   value,
-   formData,
-   setFormData,
-}) {
+export default function TextControl({ id, type, errorMessage, value, formData, setFormData }) {
    const capitalize = string => {
       if (string.startsWith('new-')) string = string.slice(4)
       return string.charAt(0).toUpperCase() + string.slice(1)

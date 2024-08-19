@@ -12,8 +12,7 @@ export const authenticate = (request, response, next) => {
    }
 
    jwt.verify(accessToken, JWT_ACCESS_SECRET, (error, decodedToken) => {
-      if (error)
-         return response.status(401).json({ error: 'Token is not valid' })
+      if (error) return response.status(401).json({ error: 'Token is not valid' })
       request.userId = decodedToken
       next()
    })
@@ -25,9 +24,7 @@ router.post('/register', async (request, response) => {
 
       const exists = await User.findOne({ username })
       if (exists) {
-         return response
-            .status(409)
-            .json({ error: 'Username is already taken ' })
+         return response.status(409).json({ error: 'Username is already taken ' })
       }
 
       const user = new User({ username, password })
@@ -52,16 +49,12 @@ router.post('/login', async (request, response) => {
          return response.status(401).json({ error: 'Invalid credentials' })
       }
 
-      const accessToken = jwt.sign(
-         { userId: user._id },
-         process.env.JWT_ACCESS_SECRET,
-         { expiresIn: '24h' }
-      )
-      const refreshToken = jwt.sign(
-         { userId: user._id },
-         process.env.JWT_REFRESH_SECRET,
-         { expiresIn: '7d' }
-      )
+      const accessToken = jwt.sign({ userId: user._id }, process.env.JWT_ACCESS_SECRET, {
+         expiresIn: '24h',
+      })
+      const refreshToken = jwt.sign({ userId: user._id }, process.env.JWT_REFRESH_SECRET, {
+         expiresIn: '7d',
+      })
 
       user.refreshToken = refreshToken
       await user.save()

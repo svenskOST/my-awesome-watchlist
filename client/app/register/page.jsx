@@ -28,24 +28,9 @@ export default function Register() {
       e.preventDefault()
 
       if (!formData.username || !formData.email || !formData.password) {
-         fieldValidation(
-            'username',
-            'Please choose a username',
-            formData,
-            setErrorMessages
-         )
-         fieldValidation(
-            'email',
-            'Please enter your email',
-            formData,
-            setErrorMessages
-         )
-         fieldValidation(
-            'password',
-            'Please choose a password',
-            formData,
-            setErrorMessages
-         )
+         fieldValidation('username', 'Please choose a username', formData, setErrorMessages)
+         fieldValidation('email', 'Please enter your email', formData, setErrorMessages)
+         fieldValidation('password', 'Please choose a password', formData, setErrorMessages)
 
          return
       }
