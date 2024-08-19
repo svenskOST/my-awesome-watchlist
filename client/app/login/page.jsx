@@ -14,8 +14,9 @@ export default function Login() {
    }
    const [formData, setFormData] = useState(empty)
    const [errorMessages, setErrorMessages] = useState(empty)
+   const { setIsLoggedIn } = useAuth()
    const router = useRouter()
-   const { authenticate } = useAuth()
+   const { authenticateToken } = useAuth()
 
    const handleSubmit = async e => {
       clear(setErrorMessages, empty)
@@ -40,7 +41,9 @@ export default function Login() {
          if (request.ok) {
             localStorage.setItem('accessToken', response.accessToken)
             localStorage.setItem('refreshToken', response.refreshToken)
-            authenticate()
+
+            const authenticated = await authenticateToken()
+            if (authenticated) setIsLoggedIn(true)
             router.push('/')
          } else
             switch (request.status) {

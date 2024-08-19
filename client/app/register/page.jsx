@@ -45,7 +45,6 @@ export default function Register() {
          const response = await request.json()
 
          if (request.ok) {
-            setFormData(empty)
             setComplete(true)
          } else
             switch (request.status) {
@@ -53,10 +52,10 @@ export default function Register() {
                   feedback('username', response, setErrorMessages)
                   break
                case 500:
-                  allFieldsErr(response)
+                  allFieldsError(response)
                   break
                case 400:
-                  allFieldsErr(response)
+                  allFieldsError(response)
                   break
             }
       } catch (error) {
