@@ -1,6 +1,6 @@
 import { handleChange } from '../helpers/formFunctions'
 
-export default function TextControl({ id, type, errorMessage, value, formData, setFormData }) {
+export default function TextControl(props) {
    const capitalize = string => {
       if (string.startsWith('new-')) string = string.slice(4)
       return string.charAt(0).toUpperCase() + string.slice(1)
@@ -8,15 +8,15 @@ export default function TextControl({ id, type, errorMessage, value, formData, s
 
    return (
       <div>
-         <label htmlFor={id}>{errorMessage}</label>
+         <label htmlFor={props.id}>{props.errorMessage}</label>
          <input
-            id={id}
-            name={id}
-            value={value}
-            autoComplete={id}
-            type={type}
-            placeholder={capitalize(id)}
-            onChange={e => handleChange(e, formData, setFormData)}
+            id={props.id}
+            name={props.id}
+            value={props.value}
+            autoComplete={props.id}
+            type={props.type}
+            placeholder={capitalize(props.id)}
+            onChange={e => handleChange(e, props.formData, props.setFormData)}
          />
       </div>
    )

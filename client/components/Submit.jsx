@@ -1,3 +1,3 @@
-export default function Submit({ value }) {
-   return <input className='cursor-pointer' type='submit' value={value} />
+export default function Submit(props) {
+   return <input className='cursor-pointer' type='submit' value={props.value} />
 }
