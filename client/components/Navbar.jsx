@@ -27,6 +27,7 @@ export default function Navbar() {
          {isLoggedIn ? (
             <>
                Rendera element som användarnamn, profilbild, dropdownmeny med länkar
+               <Link href={'/browse'}>Browse</Link>
                <button onClick={handleLogout}>Logout</button>
             </>
          ) : (

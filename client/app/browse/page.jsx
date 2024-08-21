@@ -1,11 +1,35 @@
+'use client'
+
+import { useState } from 'react'
 import Item from '../../components/Item.jsx'
 
 export default function Browse() {
+   const [list, setList] = useState([])
+
+   const fetchList = async () => {
+      try {
+         const request = await fetch('http://localhost:4000/watchlist/get')
+         const response = await request.json()
+
+         if (request.ok) setList(response)
+      } catch (error) {
+         console.error(error)
+      }
+   }
+
+   const fetchData = async () => {
+      try {
+         //interagera med TMDB API utefter list
+      } catch (error) {
+         console.error(error)
+      }
+   }
+
    return (
       <main>
          <h1>Browse your watchlist</h1>
-         {items.map(item => (
-            <Item title={data.title} />
+         {list.map(item => (
+            <Item title={item.title} img={item.img} />
          ))}
       </main>
    )
