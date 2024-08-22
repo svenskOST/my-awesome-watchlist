@@ -14,7 +14,12 @@ export const authenticate = (req, res, next) => {
    })
 }
 
-router.post('/authenticate', authenticate, (_req, res) => {
+router.get('/', authenticate, async (req, res) => {
+   const user = await User.findOne({ _id: req.userId }).select('username')
+   res.status(200).json(user.username)
+})
+
+router.post('/', authenticate, (_req, res) => {
    res.status(200).json({ message: 'Yeah you good' })
 })
 

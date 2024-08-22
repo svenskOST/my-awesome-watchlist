@@ -9,7 +9,7 @@ export function AuthProvider({ children }) {
       try {
          const accessToken = localStorage.getItem('accessToken')
 
-         const request = await fetch('http://localhost:4000/auth/authenticate', {
+         const request = await fetch('http://localhost:4000/auth', {
             method: 'POST',
             headers: { Authorization: `Bearer ${accessToken}` },
          })

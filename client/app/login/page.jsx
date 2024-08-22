@@ -44,7 +44,7 @@ export default function Login() {
 
             const authenticated = await authenticateToken()
             if (authenticated) setIsLoggedIn(true)
-            router.push('/')
+            router.back()
          } else
             switch (request.status) {
                case 404:
