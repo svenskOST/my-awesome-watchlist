@@ -1,7 +1,30 @@
 import express from 'express'
-import authenticate from './auth.js'
+import { authenticate } from './auth.js'
+import User from '../schemas/User.js'
+import { MovieDb } from 'moviedb-promise'
 
 const router = express.Router()
+const moviedb = new MovieDb('a4d42445d4f4ac7d764f7e53c4b5bff0')
+
+router.get('/', authenticate, async (req, res) => {
+   try {
+      const user = await User.findOne({ _id: req.userId }).select('watchlist')
+      const watchlist = user.watchlist
+
+      for (let i = 0; i < watchlist.length; i++) {
+         await moviedb
+            .movieInfo({ id: watchlist[i].id })
+            .then(result => {
+               watchlist[i] = result
+            })
+            .catch(console.error)
+      }
+
+      res.json(watchlist)
+   } catch (error) {
+      res.status(400).json({ error: error.message })
+   }
+})
 
 /*
 router.post('/', authenticate, async (request, response) => {
@@ -14,15 +37,6 @@ router.post('/', authenticate, async (request, response) => {
       })
       await item.save()
       response.status(201).json(item)
-   } catch (error) {
-      response.status(400).json({ error: error.message })
-   }
-})
-
-router.get('/', authenticate, async (request, response) => {
-   try {
-      const item = await Item.find({ userId: request.userId })
-      response.json(item)
    } catch (error) {
       response.status(400).json({ error: error.message })
    }

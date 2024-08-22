@@ -1,25 +1,27 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Item from '../../components/Item.jsx'
 
 export default function Browse() {
    const [list, setList] = useState([])
 
+   useEffect(() => {
+      fetchList()
+   }, [])
+
    const fetchList = async () => {
       try {
-         const request = await fetch('http://localhost:4000/watchlist/get')
+         const accessToken = localStorage.getItem('accessToken')
+
+         const request = await fetch('http://localhost:4000/watchlist', {
+            headers: { Authorization: `Bearer ${accessToken}` },
+         })
          const response = await request.json()
 
-         if (request.ok) setList(response)
-      } catch (error) {
-         console.error(error)
-      }
-   }
-
-   const fetchData = async () => {
-      try {
-         //interagera med TMDB API utefter list
+         if (request.ok) {
+            setList(response)
+         }
       } catch (error) {
          console.error(error)
       }
@@ -29,12 +31,8 @@ export default function Browse() {
       <main>
          <h1>Browse your watchlist</h1>
          {list.map(item => (
-            <Item title={item.title} img={item.img} />
+            <Item key={item.id} title={item.title} img={`https://image.tmdb.org/t/p/original/${item.poster_path}`} />
          ))}
       </main>
    )
 }
-
-//skicka get till min server för att hämta användarens lista från min databas
-//denna lista består endast av namnen
-//använd sedan namnen för att hämta data från TMDB API
