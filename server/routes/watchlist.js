@@ -22,7 +22,15 @@ router.get('/', authenticate, async (req, res) => {
 
       res.json(watchlist)
    } catch (error) {
-      res.status(400).json({ error: error.message })
+      res.status(500).json({ error: error.message })
+   }
+})
+
+router.post('/', authenticate, async (req, res) => {
+   try {
+      //add item to watchlist
+   } catch (error) {
+      res.status(500).json({ error: error.message })
    }
 })
 

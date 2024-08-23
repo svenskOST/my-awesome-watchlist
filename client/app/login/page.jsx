@@ -16,7 +16,25 @@ export default function Login() {
    const [errorMessages, setErrorMessages] = useState(empty)
    const { setIsLoggedIn } = useAuth()
    const router = useRouter()
-   const { authenticateToken } = useAuth()
+
+   const authenticateToken = async () => {
+      try {
+         const accessToken = localStorage.getItem('accessToken')
+
+         const request = await fetch('http://localhost:4000/auth', {
+            method: 'POST',
+            headers: { Authorization: `Bearer ${accessToken}` },
+         })
+
+         if (request.ok) {
+            return true
+         } else {
+            return false
+         }
+      } catch (error) {
+         console.error(error)
+      }
+   }
 
    const handleSubmit = async e => {
       clear(setErrorMessages, empty)
@@ -60,8 +78,8 @@ export default function Login() {
             }
       } catch (error) {
          console.error(error)
-         feedback('username', 'Error', setErrorMessages)
-         feedback('password', 'Error', setErrorMessages)
+         feedback('username', 'Unknown error', setErrorMessages)
+         feedback('password', 'Unknown error', setErrorMessages)
       }
    }
 

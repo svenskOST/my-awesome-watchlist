@@ -4,8 +4,7 @@ import { useEffect, useState } from 'react'
 
 export default function Navbar() {
    const [username, setUsername] = useState('')
-   const { isLoggedIn, setIsLoggedIn } = useAuth()
-   const { authenticateToken } = useAuth()
+   const { isLoggedIn, setIsLoggedIn, authenticateToken } = useAuth()
 
    const fetchUsername = async () => {
       if (isLoggedIn) {

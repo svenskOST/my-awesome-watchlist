@@ -33,15 +33,9 @@ export default function Browse() {
       <main>
          <h1>Browse your watchlist</h1>
          {isLoggedIn ? (
-            list.map(item => (
-               <Item
-                  key={item.id}
-                  title={item.title}
-                  img={`https://image.tmdb.org/t/p/original/${item.poster_path}`}
-               />
-            ))
+            list.map(item => <Item key={item.id} title={item.title} img={item.poster_path} />)
          ) : (
-            <h1>You are trying to access a page that requires you to be logged in.</h1>
+            <h2>You are trying to access a page that requires you to be logged in.</h2>
          )}
       </main>
    )

@@ -60,7 +60,7 @@ export default function Register() {
             }
       } catch (error) {
          console.error(error)
-         allFieldsError('Error')
+         allFieldsError('Unknown error')
       }
    }
 

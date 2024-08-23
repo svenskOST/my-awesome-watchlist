@@ -36,7 +36,7 @@ router.post('/register', async (req, res) => {
       await user.save()
       res.status(201).json({ message: 'User created' })
    } catch (error) {
-      res.status(400).json({ error: error.message })
+      res.status(500).json({ error: error.message })
    }
 })
 
@@ -60,7 +60,7 @@ router.post('/login', async (req, res) => {
 
       res.json({ accessToken })
    } catch (error) {
-      res.status(400).json({ error: error.message })
+      res.status(500).json({ error: error.message })
    }
 })
 
