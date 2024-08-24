@@ -1,70 +1,55 @@
 'use client'
 
 import { useState } from 'react'
-import { useAuth } from '../../context/AuthProvider'
 import { useRouter } from 'next/navigation'
+import { context } from '../../context/LoginProvider'
+import { request } from '../../helpers/request'
 import Item from '../../components/Item'
 import Submit from '../../components/Submit'
 
 export default function Add() {
+   const { isLoggedIn } = context()
+   const router = useRouter()
+
    // State to handle selected title, error message and completion status
+   const [searchResults, setSearchResults] = useState(null)
    const [selectedTitle, setSelectedTitle] = useState(null)
    const [errorMessage, setErrorMessage] = useState('')
    const [complete, setComplete] = useState(false)
 
-   // Access context and router
-   const { isLoggedIn } = useAuth()
-   const router = useRouter()
-
-   // Mockup search function
    const search = async e => {
-      const query = e.target.value
-      console.log(`Searching for: ${query}`)
+      // Get search results with a query
+      request(`/watchlist/search?${e.target.value}`).then(res => {
+         const status = res.status
+         const data = res.json()
 
-      // Mockup för att simulera att ett objekt hittades
-      if (query === 'Example') {
-         setSelectedTitle({
-            title: 'Example Movie',
-            poster_path: '/path/to/example/poster.jpg',
-         })
-         setErrorMessage('')
-      } else {
-         setSelectedTitle(null)
-         setErrorMessage('No results found')
-      }
+         if (res.ok) {
+            setSearchResults(data)
+         } else {
+            handleErrorResponse(status, data)
+         }
+      })
    }
 
-   // Handle form submission
    const handleSubmit = async e => {
       e.preventDefault()
-
-      // Reset error message
       setErrorMessage('')
 
-      // Make sure user has selected a title
       if (!selectedTitle) {
          setErrorMessage('No title selected')
          return
       }
 
-      // Attempt to add the title to watchlist
-      try {
-         const request = await fetch('http://localhost:4000/watchlist', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(selectedTitle),
-         })
-         const response = await request.json()
+      request('/watchlist', 'POST', selectedTitle).then(res => {
+         const status = res.status
+         const data = res.json()
 
-         if (request.ok) {
-            setComplete(true) // Success
+         if (res.ok) {
+            setComplete(true)
          } else {
-            handleErrorResponse(response.status, data)
+            handleErrorResponse(status, data)
          }
-      } catch (error) {
-         console.error('Failed to add to watchlist: ', error)
-         setErrorMessage('Unknown error occured')
-      }
+      })
    }
 
    // Handle specific error responses based on status codes

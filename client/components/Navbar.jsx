@@ -1,50 +1,29 @@
 import { useState, useEffect } from 'react'
-import { useAuth } from '../context/AuthProvider'
-import { authenticateToken } from '../helpers/authenticateToken'
+import { context } from '../context/LoginProvider'
+import { request } from '../helpers/request'
 import Link from 'next/link'
 
 export default function Navbar() {
-   // State for user data
+   const { isLoggedIn, setIsLoggedIn } = context()
    const [username, setUsername] = useState('')
 
-   // Access context
-   const { isLoggedIn, setIsLoggedIn } = useAuth()
-
-   // Perform a control to see if user is logged in
    useEffect(() => {
-      authenticateToken()
-         .then(result => {
-            setIsLoggedIn(result)
-         })
-         .catch(console.error)
+      // Authenticate
+      request('/auth', 'POST').then(res => {
+         setIsLoggedIn(res.ok)
+      })
    }, [])
 
    useEffect(() => {
-      const fetchUsername = async () => {
-         if (isLoggedIn) {
-            // Attempt to fetch username
-            try {
-               const accessToken = localStorage.getItem('accessToken')
-
-               const request = await fetch('http://localhost:4000/auth', {
-                  headers: { Authorization: `Bearer ${accessToken}` },
-               })
-               const response = request.json()
-
-               if (request.ok) {
-                  setUsername(response)
-               }
-            } catch (error) {
-               console.error(error)
-            }
-         }
+      if (isLoggedIn) {
+         // Get username
+         request('/auth').then(res => {
+            if (res.ok) setUsername(res.json())
+         })
       }
-
-      fetchUsername()
    }, [isLoggedIn])
 
    const handleLogout = () => {
-      // Remove token from storage
       localStorage.removeItem('accessToken')
       setIsLoggedIn(false)
    }

@@ -2,7 +2,7 @@
 
 import './globals.css'
 import { Inter } from 'next/font/google'
-import { AuthProvider } from '../context/AuthProvider'
+import LoginProvider from '../context/LoginProvider'
 import Navbar from '../components/Navbar'
 
 // Set a font for the application
@@ -14,14 +14,14 @@ export default function RootLayout({ children }) {
          <head>
             <title>My Awesome Watchlist</title>
          </head>
-         <AuthProvider>
+         <LoginProvider>
             <html lang='en'>
                <body className={inter.className}>
                   <Navbar />
                   {children}
                </body>
             </html>
-         </AuthProvider>
+         </LoginProvider>
       </>
    )
 }

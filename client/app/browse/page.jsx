@@ -1,46 +1,32 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { useAuth } from '../../context/AuthProvider'
+import { context } from '../../context/LoginProvider'
+import { request } from '../../helpers/request'
 import Item from '../../components/Item'
 
 export default function Browse() {
+   const { isLoggedIn } = context()
+
    // State to handle watchlist and loading/error statuses
    const [list, setList] = useState([])
    const [loading, setLoading] = useState(true)
    const [error, setError] = useState(null)
 
-   // Access context
-   const { isLoggedIn } = useAuth()
-
    useEffect(() => {
-      const fetchList = async () => {
-         // Attempt to fetch watchlist
-         try {
-            const accessToken = localStorage.getItem('accessToken')
-            const request = await fetch('http://localhost:4000/watchlist', {
-               headers: { Authorization: `Bearer ${accessToken}` },
-            })
-            const response = await request.json()
+      // Get watchlist
+      request('/watchlist')
+         .then(res => {
+            const status = res.status
+            const data = res.json()
 
-            if (request.ok) {
-               setList(response)
+            if (res.ok) {
+               setList(data)
             } else {
-               handleErrorResponse(response.status, data)
+               handleErrorResponse(status, data)
             }
-         } catch (error) {
-            console.error('Failed to fetch watchlist:', error)
-            setError('Failed to load your watchlist. Please try again later.')
-         } finally {
-            setLoading(false)
-         }
-      }
-
-      if (isLoggedIn) {
-         fetchList()
-      } else {
-         setLoading(false)
-      }
+         })
+         .finally(setLoading(false))
    }, [isLoggedIn])
 
    // Handle specific error responses based on status codes

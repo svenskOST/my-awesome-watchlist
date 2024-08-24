@@ -2,12 +2,12 @@
 
 import { useState } from 'react'
 import { fieldValidation, feedback, clear } from '../../helpers/formFunctions'
+import { request } from '../../helpers/request'
 import Link from 'next/link'
 import TextControl from '../../components/TextControl'
 import Submit from '../../components/Submit'
 
 export default function Register() {
-   // Initial empty form data
    const emptyFormData = {
       username: '',
       email: '',
@@ -19,18 +19,9 @@ export default function Register() {
    const [errorMessages, setErrorMessages] = useState(emptyFormData)
    const [complete, setComplete] = useState(false)
 
-   // Function to handle validation errors for all fields
-   const handleAllFieldsError = response => {
-      feedback('username', response, setErrorMessages)
-      feedback('email', response, setErrorMessages)
-      feedback('password', response, setErrorMessages)
-   }
-
    // Handle form submission
    const handleSubmit = async e => {
       e.preventDefault()
-
-      // Clear previous error messages
       clear(setErrorMessages, emptyFormData)
 
       // Validate input fields
@@ -41,24 +32,17 @@ export default function Register() {
          return
       }
 
-      // Attempt to register the user
-      try {
-         const response = await fetch('http://localhost:4000/auth/register', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(formData),
-         })
-         const data = await response.json()
+      // Register new user
+      request('/auth/register', 'POST', formData, false).then(res => {
+         const status = res.status
+         const data = res.json()
 
-         if (response.ok) {
-            setComplete(true) // Registration successful
+         if (res.ok) {
+            setComplete(true)
          } else {
-            handleErrorResponse(response.status, data)
+            handleErrorResponse(status, data)
          }
-      } catch (error) {
-         console.error('Registration failed:', error)
-         handleAllFieldsError('Unknown error occurred')
-      }
+      })
    }
 
    // Handle specific error responses based on status codes
@@ -75,6 +59,13 @@ export default function Register() {
             handleAllFieldsError('An unexpected error occurred')
             break
       }
+   }
+
+   // Function to handle validation errors for all fields
+   const handleAllFieldsError = res => {
+      feedback('username', res, setErrorMessages)
+      feedback('email', res, setErrorMessages)
+      feedback('password', res, setErrorMessages)
    }
 
    return (

@@ -1,69 +1,52 @@
 'use client'
 
 import { useState } from 'react'
-import { useAuth } from '../../context/AuthProvider'
 import { useRouter } from 'next/navigation'
+import { context } from '../../context/LoginProvider'
 import { fieldValidation, feedback, clear } from '../../helpers/formFunctions'
-import { authenticateToken } from '../../helpers/authenticateToken'
+import { request } from '../../helpers/request'
 import TextControl from '../../components/TextControl'
 import Submit from '../../components/Submit'
 
 export default function Login() {
-   // Initial empty form data
+   const { setIsLoggedIn } = useAuth()
+   const router = useRouter()
+   
    const emptyFormData = {
       username: '',
       password: '',
    }
 
-   // State for form data and error messages
    const [formData, setFormData] = useState(emptyFormData)
    const [errorMessages, setErrorMessages] = useState(emptyFormData)
 
-   // Access context and router
-   const { setIsLoggedIn } = useAuth()
-   const router = useRouter()
-
-   // Handle form submission
    const handleSubmit = async e => {
       e.preventDefault()
-
-      // Clear previous error messages
       clear(setErrorMessages, emptyFormData)
 
-      // Validate fields
       if (!formData.username || !formData.password) {
          fieldValidation('username', 'Please enter your username', formData, setErrorMessages)
          fieldValidation('password', 'Please enter your password', formData, setErrorMessages)
          return
       }
 
-      // Send login request
-      try {
-         const response = await fetch('http://localhost:4000/auth/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(formData),
-         })
-         const data = await response.json()
+      // Login the user
+      request('/auth/login', 'POST', formData, false).then(res => {
+         const status = res.status
+         const data = res.json()
 
-         if (response.ok) {
-            // Store token in local storage
+         if (res.ok) {
             localStorage.setItem('accessToken', data.accessToken)
 
-            // Authenticate the token and redirect user if successful
-            const authenticated = await authenticateToken()
-            if (authenticated) {
-               setIsLoggedIn(true)
+            // Authenticate
+            request('/auth', 'POST').then(res => {
+               setIsLoggedIn(res.ok)
                router.back()
-            }
+            })
          } else {
-            handleErrorResponse(response.status, data)
+            handleErrorResponse(status, data)
          }
-      } catch (error) {
-         console.error('Login failed:', error)
-         feedback('username', 'Unknown error occurred', setErrorMessages)
-         feedback('password', 'Unknown error occurred', setErrorMessages)
-      }
+      })
    }
 
    // Handle specific error responses based on status codes
