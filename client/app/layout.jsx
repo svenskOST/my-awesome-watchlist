@@ -1,10 +1,11 @@
 'use client'
 
+import './globals'
 import { Inter } from 'next/font/google'
-import './globals.css'
 import { AuthProvider } from '../context/AuthProvider'
 import Navbar from '../components/Navbar'
 
+// Set a font for the application
 const inter = Inter({ subsets: ['latin'] })
 
 export default function RootLayout({ children }) {
