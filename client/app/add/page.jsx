@@ -103,7 +103,7 @@ export default function Add() {
                            {selectedTitle ? (
                               <Item title={selectedTitle.title} img={selectedTitle.poster_path} />
                            ) : (
-                              <div>No item selected</div>
+                              <div>Empty</div>
                            )}
                         </output>
                      </div>
