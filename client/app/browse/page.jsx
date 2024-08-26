@@ -21,10 +21,13 @@ export default function Browse() {
             const data = res.json()
 
             if (res.ok) {
-               setList(data)
+               return data
             } else {
                handleErrorResponse(status, data)
             }
+         })
+         .then(data => {
+            setList(data)
          })
          .finally(setLoading(false))
    }, [isLoggedIn])
