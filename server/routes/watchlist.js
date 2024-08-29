@@ -1,10 +1,13 @@
+import dotenv from 'dotenv'
 import express from 'express'
 import { authenticate } from './auth.js'
-import User from '../schemas/User.js'
 import { MovieDb } from 'moviedb-promise'
+import User from '../schemas/User.js'
+
+dotenv.config()
 
 const router = express.Router()
-const moviedb = new MovieDb('a4d42445d4f4ac7d764f7e53c4b5bff0')
+const moviedb = new MovieDb(process.env.MOVIEDB_API_KEY)
 
 router.get('/', authenticate, async (req, res) => {
    try {

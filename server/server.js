@@ -1,14 +1,11 @@
 import express from 'express'
 import mongoose from 'mongoose'
 import cors from 'cors'
-import dotenv from 'dotenv'
 import authRoutes from './routes/auth.js'
 import watchlistRoutes from './routes/watchlist.js'
 
 console.log('maw-server starting')
-console.log(`maw-server running in node ${process.version}`)
-
-dotenv.config()
+console.log(`maw-server running on node ${process.version}`)
 
 const app = express()
 const PORT = process.env.PORT

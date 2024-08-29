@@ -14,20 +14,22 @@ export default function Browse() {
    const [error, setError] = useState(null)
 
    useEffect(() => {
-      if (isLoggedIn) {
-         // Get watchlist
-         request('/watchlist')
-            .then(({ ok, status, data }) => {
-               if (ok) {
-                  setList(data)
-               } else {
-                  handleErrorResponse(status, data)
-               }
-            })
-            .finally(setLoading(false))
-      } else {
-         setLoading(false)
-         setError('You need to be logged in to view your watchlist')
+      if (isLoggedIn !== null) {
+         if (isLoggedIn) {
+            // Get watchlist
+            request('/watchlist')
+               .then(({ ok, status, data }) => {
+                  if (ok) {
+                     setList(data)
+                  } else {
+                     handleErrorResponse(status, data)
+                  }
+               })
+               .finally(setLoading(false))
+         } else {
+            setLoading(false)
+            setError('You need to be logged in to view your watchlist')
+         }
       }
    }, [isLoggedIn])
 
