@@ -12,17 +12,14 @@ router.get('/', authenticate, async (req, res) => {
       const watchlist = user.watchlist
 
       for (let i = 0; i < watchlist.length; i++) {
-         await moviedb
-            .movieInfo({ id: watchlist[i].id })
-            .then(result => {
-               watchlist[i] = result
-            })
-            .catch(console.error)
+         await moviedb.movieInfo({ id: watchlist[i].id }).then(result => {
+            watchlist[i] = result
+         })
       }
 
       res.json(watchlist)
    } catch (error) {
-      res.status(500).json({ error: error.message })
+      res.status(500).json(error.message)
    }
 })
 

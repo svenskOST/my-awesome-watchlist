@@ -33,11 +33,8 @@ export default function Register() {
       }
 
       // Register new user
-      request('/auth/register', 'POST', formData, false).then(res => {
-         const status = res.status
-         const data = res.json()
-
-         if (res.ok) {
+      request('/auth/register', 'POST', formData, false).then(({ ok, status, data }) => {
+         if (ok) {
             setComplete(true)
          } else {
             handleErrorResponse(status, data)

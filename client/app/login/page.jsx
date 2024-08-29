@@ -9,9 +9,9 @@ import TextControl from '../../components/TextControl'
 import Submit from '../../components/Submit'
 
 export default function Login() {
-   const { setIsLoggedIn } = useAuth()
+   const { setIsLoggedIn } = context()
    const router = useRouter()
-   
+
    const emptyFormData = {
       username: '',
       password: '',
@@ -31,17 +31,17 @@ export default function Login() {
       }
 
       // Login the user
-      request('/auth/login', 'POST', formData, false).then(res => {
-         const status = res.status
-         const data = res.json()
-
-         if (res.ok) {
+      request('/auth/login', 'POST', formData, false).then(({ ok, status, data }) => {
+         if (ok) {
             localStorage.setItem('accessToken', data.accessToken)
-
             // Authenticate
-            request('/auth', 'POST').then(res => {
-               setIsLoggedIn(res.ok)
-               router.back()
+            request('/auth', 'POST').then(({ ok }) => {
+               setIsLoggedIn(ok)
+               if (document.referrer.endsWith('/register')) {
+                  router.push('/')
+               } else {
+                  router.back()
+               }
             })
          } else {
             handleErrorResponse(status, data)

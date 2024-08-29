@@ -8,7 +8,7 @@ export const authenticate = (req, res, next) => {
    const accessToken = req.header('Authorization').replace('Bearer ', '')
 
    jwt.verify(accessToken, process.env.JWT_ACCESS_SECRET, (error, decodedToken) => {
-      if (error) return res.status(401).json({ error: 'Invalid or missing token' })
+      if (error) return res.status(401).json('Invalid or missing token')
       req.userId = decodedToken.userId
       next()
    })

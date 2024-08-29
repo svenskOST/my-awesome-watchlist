@@ -12,7 +12,7 @@ export const request = async (url: string, method = 'GET', body = null, auth = t
          },
          ...(body ? { body: JSON.stringify(body) } : {}),
       })
-      return response
+      return { ok: response.ok, status: response.status, data: await response.json() }
    } catch (error) {
       console.error('Request failed:', error)
    }

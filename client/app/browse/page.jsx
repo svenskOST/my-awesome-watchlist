@@ -14,22 +14,21 @@ export default function Browse() {
    const [error, setError] = useState(null)
 
    useEffect(() => {
-      // Get watchlist
-      request('/watchlist')
-         .then(res => {
-            const status = res.status
-            const data = res.json()
-
-            if (res.ok) {
-               return data
-            } else {
-               handleErrorResponse(status, data)
-            }
-         })
-         .then(data => {
-            setList(data)
-         })
-         .finally(setLoading(false))
+      if (isLoggedIn) {
+         // Get watchlist
+         request('/watchlist')
+            .then(({ ok, status, data }) => {
+               if (ok) {
+                  setList(data)
+               } else {
+                  handleErrorResponse(status, data)
+               }
+            })
+            .finally(setLoading(false))
+      } else {
+         setLoading(false)
+         setError('You need to be logged in to view your watchlist')
+      }
    }, [isLoggedIn])
 
    // Handle specific error responses based on status codes
@@ -51,14 +50,10 @@ export default function Browse() {
             <h2>Loading your watchlist...</h2>
          ) : error ? (
             <h2>{error}</h2>
-         ) : isLoggedIn ? (
-            list.length > 0 ? (
-               list.map(item => <Item key={item.id} title={item.title} img={item.poster_path} />)
-            ) : (
-               <h2>Your watchlist is empty.</h2>
-            )
+         ) : list.length > 0 ? (
+            list.map(item => <Item key={item.id} title={item.title} img={item.poster_path} />)
          ) : (
-            <h2>You need to be logged in to view your watchlist</h2>
+            <h2>Your watchlist is empty.</h2>
          )}
       </main>
    )

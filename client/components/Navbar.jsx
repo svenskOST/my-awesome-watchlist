@@ -9,16 +9,16 @@ export default function Navbar() {
 
    useEffect(() => {
       // Authenticate
-      request('/auth', 'POST').then(res => {
-         setIsLoggedIn(res.ok)
+      request('/auth', 'POST').then(({ ok }) => {
+         setIsLoggedIn(ok)
       })
    }, [])
 
    useEffect(() => {
       if (isLoggedIn) {
          // Get username
-         request('/auth').then(res => {
-            if (res.ok) setUsername(res.json())
+         request('/auth').then(({ ok, data }) => {
+            if (ok) setUsername(data)
          })
       }
    }, [isLoggedIn])

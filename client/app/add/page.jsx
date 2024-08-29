@@ -19,11 +19,8 @@ export default function Add() {
 
    const search = async e => {
       // Get search results with a query
-      request(`/watchlist/search?${e.target.value}`).then(res => {
-         const status = res.status
-         const data = res.json()
-
-         if (res.ok) {
+      request(`/watchlist/search?${e.target.value}`).then(({ ok, status, data }) => {
+         if (ok) {
             setSearchResults(data)
          } else {
             handleErrorResponse(status, data)
