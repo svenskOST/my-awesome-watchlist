@@ -20,7 +20,7 @@ router.get('/', authenticate, async (req, res) => {
 })
 
 router.post('/', authenticate, (_req, res) => {
-   res.status(200).json({ message: 'Yeah you good' })
+   res.status(200).json('Authorized')
 })
 
 router.post('/register', async (req, res) => {
@@ -29,14 +29,14 @@ router.post('/register', async (req, res) => {
 
       const exists = await User.findOne({ username })
       if (exists) {
-         return res.status(409).json({ error: 'Username is already taken ' })
+         return res.status(409).json('Username is already taken ')
       }
 
       const user = new User({ username, password })
       await user.save()
-      res.status(201).json({ message: 'User created' })
+      res.status(201).json('User created')
    } catch (error) {
-      res.status(500).json({ error: error.message })
+      res.status(500).json(error.message)
    }
 })
 
@@ -46,21 +46,21 @@ router.post('/login', async (req, res) => {
 
       const user = await User.findOne({ username })
       if (!user) {
-         return res.status(404).json({ error: 'Could not find user' })
+         return res.status(404).json('Could not find user')
       }
 
       const valid = await user.comparePassword(password)
       if (!valid) {
-         return res.status(401).json({ error: 'Invalid credentials' })
+         return res.status(401).json('Invalid credentials')
       }
 
       const accessToken = jwt.sign({ userId: user._id }, process.env.JWT_ACCESS_SECRET, {
          expiresIn: '7d',
       })
 
-      res.json({ accessToken })
+      res.json(accessToken)
    } catch (error) {
-      res.status(500).json({ error: error.message })
+      res.status(500).json(error.message)
    }
 })
 

@@ -33,7 +33,7 @@ export default function Login() {
       // Login the user
       request('/auth/login', 'POST', formData, false).then(({ ok, status, data }) => {
          if (ok) {
-            localStorage.setItem('accessToken', data.accessToken)
+            localStorage.setItem('accessToken', data)
             // Authenticate
             request('/auth', 'POST').then(({ ok }) => {
                setIsLoggedIn(ok)

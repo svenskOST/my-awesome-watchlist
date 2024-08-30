@@ -15,8 +15,8 @@ router.get('/', authenticate, async (req, res) => {
       const watchlist = user.watchlist
 
       for (let i = 0; i < watchlist.length; i++) {
-         await moviedb.movieInfo({ id: watchlist[i].id }).then(result => {
-            watchlist[i] = result
+         await moviedb.movieInfo({ id: watchlist[i].id }).then(res => {
+            watchlist[i] = res
          })
       }
 
@@ -30,7 +30,25 @@ router.post('/', authenticate, async (req, res) => {
    try {
       // add item to watchlist
    } catch (error) {
-      res.status(500).json({ error: error.message })
+      res.status(500).json(error.message)
+   }
+})
+
+router.get('/search', authenticate, async (req, res) => {
+   try {
+      const query = req.query.query
+
+      if (!query) {
+         return res.status(400).json('Query parameter is required')
+      }
+
+      const results = await moviedb.searchMulti({ query: query }).then(res => {
+         return res
+      })
+
+      res.json(results)
+   } catch (error) {
+      res.status(500).json(error.message)
    }
 })
 

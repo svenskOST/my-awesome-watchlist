@@ -19,9 +19,10 @@ export default function Add() {
 
    const search = async e => {
       // Get search results with a query
-      request(`/watchlist/search?${e.target.value}`).then(({ ok, status, data }) => {
+      request(`/watchlist/search?query=${e.target.value}`).then(({ ok, status, data }) => {
          if (ok) {
-            setSearchResults(data)
+            console.log(data)
+            //setSearchResults(data)
          } else {
             handleErrorResponse(status, data)
          }
@@ -52,6 +53,8 @@ export default function Add() {
    // Handle specific error responses based on status codes
    const handleErrorResponse = (status, data) => {
       switch (status) {
+         case 400:
+            setErrorMessage(data)
          default:
             setErrorMessage('An unexpected error occurred')
             break
