@@ -12,7 +12,7 @@ export default function Add() {
    const router = useRouter()
 
    // State to handle selected title, error message and completion status
-   const [searchResults, setSearchResults] = useState(null)
+   const [searchResults, setSearchResults] = useState([])
    const [selectedTitle, setSelectedTitle] = useState(null)
    const [errorMessage, setErrorMessage] = useState('')
    const [complete, setComplete] = useState(false)
@@ -21,8 +21,7 @@ export default function Add() {
       // Get search results with a query
       request(`/watchlist/search?query=${e.target.value}`).then(({ ok, status, data }) => {
          if (ok) {
-            console.log(data)
-            //setSearchResults(data)
+            setSearchResults(data.results)
          } else {
             handleErrorResponse(status, data)
          }
@@ -82,6 +81,20 @@ export default function Add() {
                ) : (
                   <form onSubmit={handleSubmit}>
                      <input type='search' placeholder='Search for a title' onChange={search} />
+                     {searchResults.length > 0 ? (
+                        searchResults.map(item => (
+                           <button
+                              key={item.id}
+                              onClick={() => {
+                                 setSelectedTitle(item)
+                              }}
+                           >
+                              <Item key={item.id} title={item.name} img={item.poster_path} />
+                           </button>
+                        ))
+                     ) : (
+                        <h2>No results found.</h2>
+                     )}
                      <div>
                         <label htmlFor={'selectedItem'}>{errorMessage}</label>
                         <output id='selectedItem'>
