@@ -1,10 +1,10 @@
+import { useLoginContext } from '../context/LoginProvider'
 import { useState, useEffect } from 'react'
-import { context } from '../context/LoginProvider'
 import { request } from '../helpers/request'
 import Link from 'next/link'
 
 export default function Navbar() {
-   const { isLoggedIn, setIsLoggedIn } = context()
+   const { isLoggedIn, setIsLoggedIn } = useLoginContext()
    const [username, setUsername] = useState('')
 
    useEffect(() => {
@@ -34,14 +34,14 @@ export default function Navbar() {
          {isLoggedIn ? (
             <>
                {username}
-               <Link href={'/browse'}>Browse</Link>
-               <Link href={'/add'}>Add</Link>
+               <Link href={'/watchlist'}>Browse</Link>
+               <Link href={'/watchlist/add'}>Add</Link>
                <button onClick={handleLogout}>Logout</button>
             </>
          ) : (
             <>
-               <Link href={'/login'}>Login</Link>
-               <Link href={'/register'}>Register</Link>
+               <Link href={'/user/login'}>Login</Link>
+               <Link href={'/user/register'}>Register</Link>
             </>
          )}
       </nav>

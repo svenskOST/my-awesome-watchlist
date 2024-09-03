@@ -12,6 +12,6 @@ export default function LoginProvider({ children }) {
    )
 }
 
-export function context() {
+export function useLoginContext() {
    return useContext(LoginContext)
 }

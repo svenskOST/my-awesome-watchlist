@@ -1,1 +1,0 @@
-// Common for watchlist pages, like login and login status things

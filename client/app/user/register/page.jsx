@@ -1,23 +1,22 @@
 'use client'
 
-import { useState } from 'react'
-import { fieldValidation, feedback, clear } from '../../helpers/formFunctions'
-import { request } from '../../helpers/request'
+import { useFormContext } from '../../../context/FormProvider'
+import { clear, fieldValidation, feedback } from '../../../helpers/formFunctions'
+import { request } from '../../../helpers/request'
+import TextControl from '../../../components/TextControl'
+import Submit from '../../../components/Submit'
 import Link from 'next/link'
-import TextControl from '../../components/TextControl'
-import Submit from '../../components/Submit'
 
 export default function Register() {
-   const emptyFormData = {
-      username: '',
-      email: '',
-      password: '',
-   }
-
-   // State to manage form data, error messages, and completion status
-   const [formData, setFormData] = useState(emptyFormData)
-   const [errorMessages, setErrorMessages] = useState(emptyFormData)
-   const [complete, setComplete] = useState(false)
+   const {
+      emptyFormData,
+      formData,
+      setFormData,
+      errorMessages,
+      setErrorMessages,
+      complete,
+      setComplete,
+   } = useFormContext()
 
    // Handle form submission
    const handleSubmit = async e => {
@@ -66,7 +65,7 @@ export default function Register() {
    }
 
    return (
-      <main>
+      <>
          {complete ? (
             <div>
                <h2>Registration complete!</h2>
@@ -107,6 +106,6 @@ export default function Register() {
                <Submit value='Create account' />
             </form>
          )}
-      </main>
+      </>
    )
 }

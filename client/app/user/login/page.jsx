@@ -1,24 +1,18 @@
 'use client'
 
-import { useState } from 'react'
+import { useFormContext } from '../../../context/FormProvider'
+import { useLoginContext } from '../../../context/LoginProvider'
 import { useRouter } from 'next/navigation'
-import { context } from '../../context/LoginProvider'
-import { fieldValidation, feedback, clear } from '../../helpers/formFunctions'
-import { request } from '../../helpers/request'
-import TextControl from '../../components/TextControl'
-import Submit from '../../components/Submit'
+import { clear, fieldValidation, feedback } from '../../../helpers/formFunctions'
+import { request } from '../../../helpers/request'
+import TextControl from '../../../components/TextControl'
+import Submit from '../../../components/Submit'
 
 export default function Login() {
-   const { setIsLoggedIn } = context()
+   const { emptyFormData, formData, setFormData, errorMessages, setErrorMessages } =
+      useFormContext()
+   const { setIsLoggedIn } = useLoginContext()
    const router = useRouter()
-
-   const emptyFormData = {
-      username: '',
-      password: '',
-   }
-
-   const [formData, setFormData] = useState(emptyFormData)
-   const [errorMessages, setErrorMessages] = useState(emptyFormData)
 
    const handleSubmit = async e => {
       e.preventDefault()
@@ -69,7 +63,7 @@ export default function Login() {
    }
 
    return (
-      <main>
+      <>
          <h1>Login</h1>
          <form onSubmit={handleSubmit}>
             {/* Username field */}
@@ -94,6 +88,6 @@ export default function Login() {
 
             <Submit value='Login' />
          </form>
-      </main>
+      </>
    )
 }

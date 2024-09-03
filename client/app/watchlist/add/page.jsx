@@ -1,14 +1,14 @@
 'use client'
 
-import { useState } from 'react'
+import { useLoginContext } from '../../../context/LoginProvider'
 import { useRouter } from 'next/navigation'
-import { context } from '../../context/LoginProvider'
-import { request } from '../../helpers/request'
-import Item from '../../components/Item'
-import Submit from '../../components/Submit'
+import { useState } from 'react'
+import { request } from '../../../helpers/request'
+import Item from '../../../components/Item'
+import Submit from '../../../components/Submit'
 
 export default function Add() {
-   const { isLoggedIn } = context()
+   const { isLoggedIn } = useLoginContext()
    const router = useRouter()
 
    // State to handle selected title, error message and completion status
