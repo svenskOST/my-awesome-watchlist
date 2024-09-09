@@ -1,6 +1,7 @@
 import { useLoginContext } from '../context/LoginProvider'
 import { useState, useEffect } from 'react'
 import { request } from '../helpers/request'
+import Image from 'next/image'
 import Link from 'next/link'
 
 export default function Navbar() {
@@ -29,9 +30,17 @@ export default function Navbar() {
    }
 
    return (
-      <nav>
-         Navbar
-         {isLoggedIn ? (
+      <nav className='flex justify-around w-full h-20 text-white'>
+         <div className='flex items-center h-full bg-black w-fit'>
+            <Image src={'/logo.png'} width={512} height={512} className='w-auto h-full'></Image>
+            <h1 className='text-3xl font-bold'>MY AWESOME WATCHLIST</h1>
+         </div>
+         <div className='w-10 h-full bg-red-500'></div>
+      </nav>
+   )
+}
+
+/*         {isLoggedIn ? (
             <>
                {username}
                <Link href={'/watchlist'}>Browse</Link>
@@ -43,7 +52,4 @@ export default function Navbar() {
                <Link href={'/user/login'}>Login</Link>
                <Link href={'/user/register'}>Register</Link>
             </>
-         )}
-      </nav>
-   )
-}
+         )}*/

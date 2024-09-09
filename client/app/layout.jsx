@@ -6,7 +6,11 @@ import LoginProvider from '../context/LoginProvider'
 import Navbar from '../components/Navbar'
 
 // Set a font for the application
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({
+   subsets: ['latin'],
+   display: 'swap',
+   variable: '--font-inter',
+})
 
 export default function RootLayout({ children }) {
    return (
@@ -15,8 +19,8 @@ export default function RootLayout({ children }) {
             <title>My Awesome Watchlist</title>
          </head>
          <LoginProvider>
-            <html lang='en'>
-               <body className={inter.className}>
+            <html lang='en' className={`${inter.variable}`}>
+               <body>
                   <Navbar />
                   <main>{children}</main>
                </body>

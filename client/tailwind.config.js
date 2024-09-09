@@ -4,13 +4,73 @@ const tailwindConfig = {
    content: ['./components/**/*.jsx', './app/**/*.jsx'],
    theme: {
       extend: {
-         backgroundImage: {
-            'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-            'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+         colors: {
+            neutral: {
+               100: 'hsl(220, 18, 98)',
+               200: 'hsl(220, 16, 95)',
+               300: 'hsl(220, 14, 92)',
+               400: 'hsl(220, 12, 84)',
+               500: 'hsl(220, 10, 71)',
+               600: 'hsl(220, 12, 56)',
+               700: 'hsl(220, 14, 32)',
+               800: 'hsl(220, 16, 23)',
+               900: 'hsl(220, 18, 15)',
+            },
+            primary: {
+               100: 'hsl(270, 100, 80)',
+               200: 'hsl(270, 90, 72)',
+               300: 'hsl(270, 80, 58)',
+               400: 'hsl(270, 60, 43)',
+               500: 'hsl(270, 55, 35)',
+               600: 'hsl(270, 60, 30)',
+               700: 'hsl(270, 80, 23)',
+               800: 'hsl(270, 90, 15)',
+               900: 'hsl(270, 100, 10)',
+            },
+            accent: {
+               green: {
+                  100: 'hsl(135, 70, 70)',
+                  300: 'hsl(135, 65, 56)',
+                  500: 'hsl(135, 60, 39)',
+                  700: 'hsl(135, 65, 34)',
+                  900: 'hsl(135, 70, 28)',
+               },
+               red: {
+                  100: 'hsl(355, 85, 40)',
+                  300: 'hsl(355, 83, 35)',
+                  500: 'hsl(355, 80, 30)',
+                  700: 'hsl(355, 85, 25)',
+                  900: 'hsl(355, 90, 20)',
+               },
+               yellow: {
+                  100: 'hsl(50, 90, 70)',
+                  300: 'hsl(50, 85, 60)',
+                  500: 'hsl(50, 80, 50)',
+                  700: 'hsl(48, 85, 45)',
+                  900: 'hsl(48, 90, 40)',
+               },
+            },
+         },
+         fontSize: {
+            100: '0.75rem',
+            200: '0.875rem',
+            300: '1rem',
+            400: '1.125rem',
+            500: '1.25rem',
+            600: '1.5rem',
+            700: '1.875rem',
+            800: '2.25rem',
+            900: '3rem',
+         },
+         fontFamily: {
+            display: '',
+            headline: '',
+            title: '',
+            body: '',
+            label: '',
          },
       },
    },
-   plugins: [],
 }
 
 export default tailwindConfig
