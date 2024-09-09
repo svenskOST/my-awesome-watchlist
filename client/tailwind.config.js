@@ -6,6 +6,7 @@ const tailwindConfig = {
       extend: {
          colors: {
             neutral: {
+               // 'bg-neutral-500'
                100: 'hsl(220, 18, 98)',
                200: 'hsl(220, 16, 95)',
                300: 'hsl(220, 14, 92)',
@@ -29,6 +30,7 @@ const tailwindConfig = {
             },
             accent: {
                green: {
+                  // 'bg-accent-green-500'
                   100: 'hsl(135, 70, 70)',
                   300: 'hsl(135, 65, 56)',
                   500: 'hsl(135, 60, 39)',
@@ -52,6 +54,7 @@ const tailwindConfig = {
             },
          },
          fontSize: {
+            // 'text-300'
             100: '0.75rem',
             200: '0.875rem',
             300: '1rem',
@@ -63,14 +66,32 @@ const tailwindConfig = {
             900: '3rem',
          },
          fontFamily: {
-            display: '',
-            headline: '',
-            title: '',
-            body: '',
-            label: '',
+            // 'font-inter'
+            inter: 'var(--font-inter)',
+         },
+         fontWeight: {
+            // 'font-400'
+            100: 100,
+            200: 200,
+            300: 300,
+            400: 400,
+            500: 500,
+            600: 600,
+            700: 700,
+            800: 800,
+            900: 900,
+         },
+         lineHeight: {
+            // 'leading-300'
+            100: 1,
+            200: 1.25,
+            300: 1.5,
+            400: 1.75,
+            500: 2,
          },
       },
    },
+   plugins: [],
 }
 
 export default tailwindConfig
