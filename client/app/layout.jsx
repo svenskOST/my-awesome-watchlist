@@ -20,7 +20,7 @@ export default function RootLayout({ children }) {
          </head>
          <LoginProvider>
             <html lang='en' className={`${inter.variable}`}>
-               <body className='text-justify hyphens-auto font-inter font-400 text-300 leading-500 text-neutral-900'>
+               <body className='text-justify hyphens-auto spacing-base select-none bg-neutral-100 line-base font-inter weight-400 text-300 text-neutral-900'>
                   <Navbar />
                   <main>{children}</main>
                </body>

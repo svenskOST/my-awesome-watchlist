@@ -2,8 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer utilities {
-   .text-balance {
-      text-wrap: balance;
+/* Define base styles of elements */
+/*@layer base {
+   h1 {
+      @apply text-900;
    }
-}
+   h2 {
+      @apply text-700;
+   }
+   a {
+      @apply text-300 text-primary-400 underline;
+   }
+}*/
+
+/* Define styled classes - overrides base, overridden by utilities */
+/*@layer components {
+   .card {
+      @apply bg-neutral-600 flex p-3;
+   }
+}*/

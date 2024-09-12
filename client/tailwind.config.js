@@ -69,7 +69,7 @@ const tailwindConfig = {
          inter: 'var(--font-inter)',
       },
       fontWeight: {
-         // 'font-400'
+         // 'weight-400'
          100: 100,
          200: 200,
          300: 300,
@@ -81,34 +81,74 @@ const tailwindConfig = {
          900: 900,
       },
       lineHeight: {
-         // 'leading-500'
-         100: 1,
-         300: 1.25,
-         500: 1.5,
-         700: 1.75,
-         900: 2,
+         // 'line-base'
+         none: 1,
+         tight: 1.25,
+         base: 1.5,
+         loose: 1.75,
+         much: 2,
+      },
+      letterSpacing: {
+         // 'spacing-base'
+         tight: '-0.1em',
+         base: '0em',
+         wider: '0.1em',
+         widest: '0.4em',
       },
       spacing: {
-         // 'w/h/m/p-4'
-         1: 4,
-         2: 8,
-         3: 12,
-         4: 16,
-         5: 24,
-         6: 32,
-         7: 48,
-         8: 64,
-         9: 96,
-         10: 128,
-         11: 192,
-         12: 256,
-         13: 384,
-         14: 512,
-         15: 640,
-         16: 768,
+         // 'w/h/m/p/l/r/t/b-4'
+         1: '0.25rem',
+         2: '0.5rem',
+         3: '0.75rem',
+         4: '1rem',
+         5: '1.5rem',
+         6: '2rem',
+         7: '3rem',
+         8: '4rem',
+         9: '6rem',
+         10: '8rem',
+         11: '12rem',
+         12: '16rem',
+         13: '24rem',
+         14: '32rem',
+         15: '40rem',
+         16: '48rem',
       },
+      borderWidth: {
+         // 'border-base'
+         none: '0rem',
+         thin: '0.0625rem',
+         base: '0.125rem',
+         thick: '0.25rem',
+      },
+      // shadow system
    },
-   plugins: [],
+   corePlugins: {
+      lineHeight: false,
+      fontWeight: false,
+      letterSpacing: false,
+   },
+   plugins: [
+      function ({ addUtilities, e, theme, variants }) {
+         const lineHeights = theme('lineHeight')
+         const lineUtilities = Object.keys(lineHeights).map(key => ({
+            [`.line-${e(key)}`]: { lineHeight: lineHeights[key] },
+         }))
+         addUtilities(lineUtilities, variants('lineHeight'))
+
+         const fontWeights = theme('fontWeight')
+         const weightUtilities = Object.keys(fontWeights).map(key => ({
+            [`.weight-${e(key)}`]: { fontWeight: fontWeights[key] },
+         }))
+         addUtilities(weightUtilities, variants('fontWeight'))
+
+         const letterSpacings = theme('letterSpacing')
+         const spacingUtilities = Object.keys(letterSpacings).map(key => ({
+            [`.spacing-${e(key)}`]: { letterSpacing: letterSpacings[key] },
+         }))
+         addUtilities(spacingUtilities, variants('letterSpacings'))
+      },
+   ],
 }
 
 export default tailwindConfig
