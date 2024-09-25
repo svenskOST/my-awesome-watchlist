@@ -3,21 +3,27 @@
 @tailwind utilities;
 
 /* Define base styles of elements */
-/*@layer base {
-   h1 {
-      @apply text-900;
+@layer base {
+   button {
+      @apply w-10 h-8 mx-4 bg-primary-400 text-neutral-100 shadow-primary-300 text-200 duration-200 rounded-2xl;
    }
-   h2 {
-      @apply text-700;
-   }
-   a {
-      @apply text-300 text-primary-400 underline;
-   }
-}*/
+}
 
 /* Define styled classes - overrides base, overridden by utilities */
-/*@layer components {
-   .card {
-      @apply bg-neutral-600 flex p-3;
+@layer components {
+   .raisedButton {
+      @apply raised-1 hover:raised-4 hover:scale-110;
    }
-}*/
+
+   .loweredButton {
+      @apply lowered-1 hover:lowered-4 hover:scale-90;
+   }
+
+   .hybridButton {
+      @apply w-fit h-fit py-1 px-2 flex justify-center items-center raised-3 hover:translate-y-1 hover:raised-5 hover:scale-110;
+   }
+
+   .hybridButton span {
+      @apply w-10 h-8 flex justify-center items-center lowered-1 rounded-2xl active:lowered-4 active:scale-90 duration-100;
+   }
+}
