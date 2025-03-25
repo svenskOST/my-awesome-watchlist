@@ -16,7 +16,7 @@ export default function RootLayout({ children }) {
    return (
       <>
          <head>
-            <title>My Awesome Watchlist</title>
+            <title>Watchit</title>
          </head>
          <LoginProvider>
             <html lang='en' className={`${inter.variable}`}>

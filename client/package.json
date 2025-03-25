@@ -1,7 +1,7 @@
 {
-   "name": "maw-client",
+   "name": "watchit-client",
    "version": "1.0.0",
-   "description": "My Awesome Watchlist frontend package.",
+   "description": "Watchit frontend package.",
    "author": "Alexander Marini",
    "license": "MIT",
    "private": true,

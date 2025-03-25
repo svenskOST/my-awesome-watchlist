@@ -67,6 +67,10 @@ const tailwindConfig = {
       fontFamily: {
          // 'font-inter'
          inter: 'var(--font-inter)',
+         poppins: 'var(--font-poppins)',
+         montserrar: 'var(--font-montserrar)',
+         helvetica: 'var(--font-helvetica)',
+         titilliumWeb: 'var(--font-titilliumWeb)',
       },
       fontWeight: {
          // 'weight-400'

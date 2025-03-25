@@ -1,7 +1,7 @@
 {
-   "name": "maw-server",
+   "name": "watchit-server",
    "version": "1.0.0",
-   "description": "My Awesome Watchlist backend package.",
+   "description": "Watchit backend package.",
    "author": "Alexander Marini",
    "license": "MIT",
    "private": true,

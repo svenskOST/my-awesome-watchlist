@@ -4,8 +4,8 @@ import cors from 'cors'
 import authRoutes from './routes/auth.js'
 import watchlistRoutes from './routes/watchlist.js'
 
-console.log('maw-server starting')
-console.log(`maw-server running on node ${process.version}`)
+console.log('watchit-server starting')
+console.log(`watchit-server running on node ${process.version}`)
 
 const app = express()
 const PORT = process.env.PORT
@@ -18,10 +18,10 @@ app.use('/watchlist', watchlistRoutes)
 mongoose
    .connect(process.env.MONGODB_URI)
    .then(() => {
-      console.log('Connected to maw-cluster')
+      console.log('Connected to watchit-cluster')
    })
    .catch(error => {
-      console.error('Error connecting to maw-cluster', error)
+      console.error('Error connecting to watchit-cluster', error)
    })
 
 app.listen(PORT, () => {

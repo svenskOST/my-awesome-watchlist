@@ -33,7 +33,7 @@ export default function Navbar() {
       <nav className='flex justify-around w-full text-neutral-100 h-8 bg-primary-500'>
          <div className='flex items-center h-full w-fit'>
             <Image src={'/logo.png'} width={512} height={512} className='w-auto h-full'></Image>
-            <h1>MY AWESOME WATCHLIST</h1>
+            <h1>WATCHIT</h1>
          </div>
       </nav>
    )
