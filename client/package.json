@@ -14,15 +14,15 @@
       "electron": "electron ."
    },
    "dependencies": {
-      "electron": "^31.3.1",
-      "next": "^15.4.2",
-      "react": "^18",
-      "react-dom": "^18"
+      "electron": "^40.8.0",
+      "next": "^16.1.6",
+      "react": "^19.2.4",
+      "react-dom": "^19.2.4"
    },
    "devDependencies": {
       "@types/react": "^18.3.4",
-      "eslint": "8.57.0",
-      "eslint-config-next": "14.2.5",
+      "eslint": "10.0.3",
+      "eslint-config-next": "^16.1.6",
       "postcss": "^8",
       "tailwindcss": "^3.4.1"
    }
